@@ -1,0 +1,52 @@
+#!/bin/bash
+
+setting=$(osascript -e "get volume settings")
+current_volume=$(sed -E -n "s/(^.*output volume:|,.*$)//gp" <<< $setting)
+output_muted=$(sed -E -n "s/^.*output muted://gp" <<< $setting)
+
+#default volume: current volume
+volume=$current_volume
+
+usage="volume 30: set volume to 30\n
+volume +10: volume up 10\n
+volume -10: volume down 10\n
+volume: toggle volume"
+
+if [ ! -z $1 ]; then
+	#parameter exists
+
+	if [ $1 = -h ]; then
+		echo -e $usage
+		exit 0
+	fi
+
+	#plus/minus
+	if [[ ${1:0:1} =~ [+-] ]]; then
+		volume=$(( $current_volume + ${1:0} ))
+	else
+		volume=$1
+	fi
+
+	#out of range (0..100)
+	if [ $volume -gt 100 ]; then
+		volume=100
+	fi
+	if [ $volume -lt 0 ]; then
+		volume=0
+	fi
+
+	echo volume set to $volume
+	#set volume
+	osascript -e "set volume output volume $volume"
+
+else
+	#no param: mute/unmute
+	if [ $output_muted = true ]; then
+		echo unmuted
+		osascript -e "set volume output muted false"
+	else
+		echo muted
+		osascript -e "set volume output muted true"
+	fi
+fi
+
