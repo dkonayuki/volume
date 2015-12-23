@@ -6,7 +6,7 @@ Volume controller in os x
 wget https://raw.githubusercontent.com/dkonayuki/volume/master/volume && chmod +x volume && mv volume /usr/local/bin
 ```
 
-/usr/bin/local should be added in $PATH
+/usr/local/bin should be added in $PATH
 
 #### How to use:
 ```
