@@ -1,5 +1,5 @@
 # volume
-Volume controller in os x
+Volume controller in terminal for os x
 
 #### How to install:
 ```
@@ -11,7 +11,7 @@ wget https://raw.githubusercontent.com/dkonayuki/volume/master/volume && chmod +
 #### How to use:
 ```
 $ volume -h
-volume 30: set volume to 30
+ volume 30: set volume to 30
  volume +10: volume up 10
  volume -10: volume down 10
  volume: toggle volume
